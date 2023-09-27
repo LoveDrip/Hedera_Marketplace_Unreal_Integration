@@ -15,66 +15,7 @@ const instance = axios.create({
 
 const NftSlider = (props) => { 
 
-  // Slider Settings.
-  var settings = {
-    dots: false,
-    arrows: false,
-    infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    autoplay: true,
-    speed: 500,
-    autoplaySpeed: 1500,
-    cssEase: "linear",
-    responsive: [
-      {
-        breakpoint: 1160,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          swipeToSlide: true,
-        },
-      },
-      {
-        breakpoint: 950,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          swipeToSlide: true,
-        },
-      },
-      {
-        breakpoint: 750,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 550,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 470,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 370,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          variableWidth: true,
-        },
-      },
-    ],
-  };
+  
  
   const [weaponNfts, setWeaponNfts] = useState([]);
   const accountId = AccountId.fromString(props.accountId);
@@ -141,8 +82,7 @@ const NftSlider = (props) => {
 
           const res = await fetch(`https://ipfs.io/ipfs/${newValue}`);
           const meta = await res.json();
-          meta.image = meta.image.slice(7);
-          value[i] = "https://ipfs.io/ipfs/" + meta.image;
+          value[i] =  meta.image;
           metadata.push(meta);
         }
         setWeaponNfts(value);
@@ -228,7 +168,7 @@ const NftSlider = (props) => {
           transition={{ ease: "easeInOut", duration: 0.9, delay: 0.2 }}
           className="float-right mt-8 sm:mt-0 sm:w-full text-right w-full"
         >
-          <Slider {...settings} className="mx-3 my-10 slider">
+          <Slider  className="mx-3 my-10 slider">
             {weaponNfts.map((nft, index) => {
               return (
                 <div className="px-3" key={index}>

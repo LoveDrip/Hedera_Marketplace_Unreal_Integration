@@ -16,7 +16,7 @@ let hashconnect = new HashConnect();
 
 const Navbar = () => { 
 
-  const {accountId, setAccountId, setHash, setTopic} = useContext(AccountContext);
+  const {accountId, setAccountId, setTopic} = useContext(AccountContext);
  
 
   //Conenct Hashpack wallet
