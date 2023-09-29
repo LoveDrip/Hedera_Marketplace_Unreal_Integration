@@ -5,7 +5,7 @@ import { HaschconnectContext } from "../../App";
 
 
 
-/// 2023.9.26 - Milos - NFT Mint Collection
+/// 2023.9.26 - Milos - NFT Mint Collection // 2023.9.29 - Milos - Update
 
 //Cids
 const cids = [
@@ -34,22 +34,40 @@ function HederaNFTGrid(props) {
   const { hash, minted, setMinted } = useContext(HaschconnectContext);
 
   let metas = [];
+  // 2023.9.29 - Milos - Get NFTS from server(inventory)
 
   useEffect(() => {
-    // 2023.9.2 - Milos - Get NFT Metadata from CIDS
+    console.log(weaponCids.length)
+    if(weaponCids.length > 0) {
+      console.log("cidssd")
+    } 
+    else {
+      getCIDs()
+
+    }
+  }, [])
+
+  function getCIDs() {
+    axios.get("http://144.76.105.15:8000/users/getcids").then(res => {
+      setWeaponCids(res.data)
+    })
+  }
+
+  useEffect(() => {
     const load = async () => {
-      for (var i = 0; i < cids.length; i++) {
-        const res = await fetch(`https://ipfs.io/ipfs/${cids[i]}`);
+      for (var i = 0; i < weaponCids.length; i++) {
+        const res = await fetch(`https://ipfs.io/ipfs/${weaponCids[i]}`);
         const meta = await res.json();
         meta.image = "https://ipfs.io/ipfs/" + meta.image.slice(7);
-        meta.cid = cids[i];
+        meta.cid = weaponCids[i];
         metas.push(meta);
       }
       setMetadata(metas);
     };
-    
+    if (metadata.length > 0) {
+    } else {
       load();
-    
+    }
   });
 
   return (

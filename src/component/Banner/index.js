@@ -51,7 +51,7 @@ const Banner = (props) => {
 
       {/*  NFT Collection Slider */}
       {props.accountId ? (
-        <NftSlider accountId={props.accountId} />
+        <NftSlider accountId={props.accountId} weaponNfts={weaponNfts} setWeaponNfts={setWeaponNfts}  />
       ) : (
         <motion.h1
           initial={{ opacity: 0 }}

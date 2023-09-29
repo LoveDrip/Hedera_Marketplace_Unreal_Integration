@@ -4,7 +4,7 @@ import Banner from "../Banner";
 const Marketplace = (props) => {
   return (
     <div className="container mx-auto">
-      <Banner accountId={props.accountId} /> 
+      <Banner accountId={props.accountId}  weaponNfts={weaponNfts} setWeaponNfts={setWeaponNfts}  /> 
     </div>
   );
 };

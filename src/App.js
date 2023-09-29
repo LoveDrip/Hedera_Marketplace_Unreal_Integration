@@ -20,6 +20,7 @@ function App() {
   const [accountId, setAccountId] = useState("");
   const [hash, setHash] = useState(new HashConnect(true)); 
   const [topic, setTopic] = useState(""); 
+  const [weaponNfts, setWeaponNfts] = useState([]);
 
   return (
     <AnimatePresence>
@@ -36,7 +37,7 @@ function App() {
 
           {/* Display My NFT Collection */}
           <Routes>
-            <Route path="/" element={ <Marketplace accountId={accountId} setAccountId={setAccountId} /> } />
+            <Route path="/" element={ <Marketplace accountId={accountId} setAccountId={setAccountId}  weaponNfts={weaponNfts} setWeaponNfts={setWeaponNfts}  /> } />
             <Route path="/" element={<Banner />} />
           </Routes>
 

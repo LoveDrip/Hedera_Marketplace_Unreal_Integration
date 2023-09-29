@@ -11,13 +11,13 @@ const instance = axios.create({
   baseURL: uri,
 });
 
-/// 2023.9.22 - Milos - NFT Slider
+/// 2023.9.22 - Milos - NFT Slider // 2023.9.29 - Milos - Update
 
 const NftSlider = (props) => { 
 
   
- 
-  const [weaponNfts, setWeaponNfts] = useState([]);
+  const weaponNfts = props.weaponNfts;
+  const setWeaponNfts = props.setWeaponNfts;
   const accountId = AccountId.fromString(props.accountId);
   const [ip, setIp] = useState();
   let value = [],
@@ -64,34 +64,35 @@ const NftSlider = (props) => {
     }
   }, [accountId, ip]);
 
-  // 2023.9.22 - Milos - Get Weapon NFTS in user wallet
+  // 2023.9.22 - Milos - Get Weapon NFTS in user wallet //2023.9.29 - Milos - Update
   useEffect(() => {
     const load = async () => {
-      if (weaponNfts.length > 0) {
+      if (walletnfts.length > 0) {
         console.log("Already imported");
       } else {
-        // Get Weapon NFT infos using Rest API
         let nftaccounts = await instance.get(`accounts/${accountId}/nfts`);
+        let balances = await instance.get(`balances?account.id=${accountId}`);
+        setBalance(parseFloat(balances.data.balances[0].balance) / 100000000);
         let nfts = nftaccounts.data.nfts;
-
         for (var i = 0; i < nfts.length; i++) {
-
-          // Convert Base64 to buffer
           const currentvalue = nfts[i].metadata;
           const newValue = Buffer.from(currentvalue, "base64");
 
           const res = await fetch(`https://ipfs.io/ipfs/${newValue}`);
           const meta = await res.json();
-          value[i] =  meta.image;
+          meta.image = meta.image.slice(7);
+          value[i] = "https://ipfs.io/ipfs/" + meta.image; 
           metadata.push(meta);
         }
-        setWeaponNfts(value);
+
+        setWalletNfts(value);
+        setWeaponNfts(metadata); 
       }
       Sendnft(metadata, accountId)
     };
 
-    load();
-  }, [accountId, balance, minted]);
+    load(); 
+  }, [accountId, balance, props.minted, weaponNfts.length]);
 
 
   // 2023.9.23 - Milos -  Send Weapon NFTS to Backend
